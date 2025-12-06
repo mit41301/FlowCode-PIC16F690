@@ -1,0 +1,11 @@
+// SourceBoost Linker Function Resource Usage Dump
+
+#GLOBAL:"global",line = 0,ram = 6.0,rom = 0;
+FCM_Init_Peripherals(void):"C:\PICDEM_Lab\flowcode\Comparator_Labs\Comparator_Lab3\solution\Comparator_Lab3.c",line = 74,ram = 0.0,rom = 11;
+FCM_TMR0_ISR(void):"C:\PICDEM_Lab\flowcode\Comparator_Labs\Comparator_Lab3\solution\Comparator_Lab3.c",line = 109,ram = 0.0,rom = 7;
+main(void):"C:\PICDEM_Lab\flowcode\Comparator_Labs\Comparator_Lab3\solution\Comparator_Lab3.c",line = 122,ram = 1.0,rom = 34;
+interrupt(void):"C:\PICDEM_Lab\flowcode\Comparator_Labs\Comparator_Lab3\solution\Comparator_Lab3.c",line = 173,ram = 0.0,rom = 15;
+delay_ms(unsigned char):"NoSourceFile",line = 0,ram = 0.0,rom = 12;
+_startup(void):"NoSourceFile",line = 0,ram = 0.0,rom = 3;
+#HEAP_BLOCK: 0, 160, 95;
+#HEAP_BLOCK: 1, 38, 74;

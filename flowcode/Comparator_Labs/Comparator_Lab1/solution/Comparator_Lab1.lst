@@ -1,0 +1,75 @@
+;/////////////////////////////////////////////////////////////////////////////////
+;// Code Generator: BoostC Compiler - http://www.sourceboost.com
+;// Version       : 6.70
+;// License Type  : Lite License (Unregistered)
+;// Limitations   : PIC12,PIC16 max code size:2048 words, max RAM banks:2, Non commercial use only
+;/////////////////////////////////////////////////////////////////////////////////
+
+	ORG 0x00000000
+0000  2823  	GOTO	_startup
+	ORG 0x00000004
+0004  00FF  	MOVWF Int1Context
+0005  0E03  	SWAPF STATUS, W
+0006  1283  	BCF STATUS, RP0
+0007  1303  	BCF STATUS, RP1
+0008  00A0  	MOVWF Int1BContext
+0009  0E0A  	SWAPF PCLATH, W
+000A  00A1  	MOVWF Int1BContext+D'1'
+000B  0E04  	SWAPF FSR, W
+000C  00A2  	MOVWF Int1BContext+D'2'
+000D  118A  	BCF PCLATH,3
+000E  120A  	BCF PCLATH,4
+000F  2826  	GOTO	interrupt
+	ORG 0x00000010
+0010        FCM_Init_C_0001D
+0010        ; { FCM_Init_Comparator ; function begin
+0010  30FB  	MOVLW 0xFB
+0011  1683  	BSF STATUS, RP0
+0012  1303  	BCF STATUS, RP1
+0013  0085  	MOVWF gbl_trisa
+0014  30A0  	MOVLW 0xA0
+0015  1283  	BCF STATUS, RP0
+0016  1703  	BSF STATUS, RP1
+0017  0099  	MOVWF gbl_cm1con0
+0018  0008  	RETURN
+0019        ; } FCM_Init_Comparator function end
+
+	ORG 0x00000019
+0019        main
+0019        ; { main ; function begin
+0019  1283  	BCF STATUS, RP0
+001A  1703  	BSF STATUS, RP1
+001B  019E  	CLRF gbl_ansel
+001C  019F  	CLRF gbl_anselh
+001D  30C0  	MOVLW 0xC0
+001E  1683  	BSF STATUS, RP0
+001F  1303  	BCF STATUS, RP1
+0020  0081  	MOVWF gbl_option_reg
+0021  2010  	CALL FCM_Init_C_0001D
+0022        label268439661
+0022  2822  	GOTO	label268439661
+0023        ; } main function end
+
+	ORG 0x00000023
+0023        _startup
+0023  118A  	BCF PCLATH,3
+0024  120A  	BCF PCLATH,4
+0025  2819  	GOTO	main
+	ORG 0x00000026
+0026        interrupt
+0026        ; { interrupt ; function begin
+0026  1283  	BCF STATUS, RP0
+0027  1303  	BCF STATUS, RP1
+0028  0E22  	SWAPF Int1BContext+D'2', W
+0029  0084  	MOVWF FSR
+002A  0E21  	SWAPF Int1BContext+D'1', W
+002B  008A  	MOVWF PCLATH
+002C  0E20  	SWAPF Int1BContext, W
+002D  0083  	MOVWF STATUS
+002E  0EFF  	SWAPF Int1Context, F
+002F  0E7F  	SWAPF Int1Context, W
+0030  0009  	RETFIE
+0031        ; } interrupt function end
+
+	ORG 0x00002007
+2007  30D5  	DW 0x30D5
