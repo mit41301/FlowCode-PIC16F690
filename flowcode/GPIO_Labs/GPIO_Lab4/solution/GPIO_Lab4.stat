@@ -1,0 +1,12 @@
+// SourceBoost Linker Function Resource Usage Dump
+
+#GLOBAL:"global",line = 0,ram = 6.0,rom = 0;
+FCM_Shift(void):"C:\PICDEM_Lab\flowcode\GPIO_Labs\GPIO_Lab4\solution\GPIO_Lab4.c",line = 184,ram = 1.0,rom = 35;
+FCD_Switches0_ReadState(unsigned char):"C:\PICDEM_Lab\flowcode\GPIO_Labs\GPIO_Lab4\solution\GPIO_Lab4.c",line = 141,ram = 4.0,rom = 23;
+main(void):"C:\PICDEM_Lab\flowcode\GPIO_Labs\GPIO_Lab4\solution\GPIO_Lab4.c",line = 252,ram = 0.0,rom = 25;
+interrupt(void):"C:\PICDEM_Lab\flowcode\GPIO_Labs\GPIO_Lab4\solution\GPIO_Lab4.c",line = 301,ram = 0.0,rom = 11;
+delay_ms(unsigned char):"NoSourceFile",line = 0,ram = 0.0,rom = 12;
+delay_s(unsigned char):"NoSourceFile",line = 0,ram = 1.0,rom = 15;
+_startup(void):"NoSourceFile",line = 0,ram = 0.0,rom = 3;
+#HEAP_BLOCK: 0, 160, 95;
+#HEAP_BLOCK: 1, 41, 71;

@@ -1,0 +1,65 @@
+;/////////////////////////////////////////////////////////////////////////////////
+;// Code Generator: BoostC Compiler - http://www.sourceboost.com
+;// Version       : 6.70
+;// License Type  : Lite License (Unregistered)
+;// Limitations   : PIC12,PIC16 max code size:2048 words, max RAM banks:2, Non commercial use only
+;/////////////////////////////////////////////////////////////////////////////////
+
+	ORG 0x00000000
+0000  281E  	GOTO	_startup
+	ORG 0x00000004
+0004  00FF  	MOVWF Int1Context
+0005  0E03  	SWAPF STATUS, W
+0006  1283  	BCF STATUS, RP0
+0007  1303  	BCF STATUS, RP1
+0008  00A0  	MOVWF Int1BContext
+0009  0E0A  	SWAPF PCLATH, W
+000A  00A1  	MOVWF Int1BContext+D'1'
+000B  0E04  	SWAPF FSR, W
+000C  00A2  	MOVWF Int1BContext+D'2'
+000D  118A  	BCF PCLATH,3
+000E  120A  	BCF PCLATH,4
+000F  2821  	GOTO	interrupt
+	ORG 0x00000010
+0010        main
+0010        ; { main ; function begin
+0010  1283  	BCF STATUS, RP0
+0011  1703  	BSF STATUS, RP1
+0012  019E  	CLRF gbl_ansel
+0013  019F  	CLRF gbl_anselh
+0014  30C0  	MOVLW 0xC0
+0015  1683  	BSF STATUS, RP0
+0016  1303  	BCF STATUS, RP1
+0017  0081  	MOVWF gbl_option_reg
+0018        label268439654
+0018  1683  	BSF STATUS, RP0
+0019  0187  	CLRF gbl_trisc
+001A  3055  	MOVLW 0x55
+001B  1283  	BCF STATUS, RP0
+001C  0087  	MOVWF gbl_portc
+001D  2818  	GOTO	label268439654
+001E        ; } main function end
+
+	ORG 0x0000001E
+001E        _startup
+001E  118A  	BCF PCLATH,3
+001F  120A  	BCF PCLATH,4
+0020  2810  	GOTO	main
+	ORG 0x00000021
+0021        interrupt
+0021        ; { interrupt ; function begin
+0021  1283  	BCF STATUS, RP0
+0022  1303  	BCF STATUS, RP1
+0023  0E22  	SWAPF Int1BContext+D'2', W
+0024  0084  	MOVWF FSR
+0025  0E21  	SWAPF Int1BContext+D'1', W
+0026  008A  	MOVWF PCLATH
+0027  0E20  	SWAPF Int1BContext, W
+0028  0083  	MOVWF STATUS
+0029  0EFF  	SWAPF Int1Context, F
+002A  0E7F  	SWAPF Int1Context, W
+002B  0009  	RETFIE
+002C        ; } interrupt function end
+
+	ORG 0x00002007
+2007  30D5  	DW 0x30D5

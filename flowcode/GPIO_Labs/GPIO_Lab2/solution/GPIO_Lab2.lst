@@ -1,0 +1,114 @@
+;/////////////////////////////////////////////////////////////////////////////////
+;// Code Generator: BoostC Compiler - http://www.sourceboost.com
+;// Version       : 6.70
+;// License Type  : Lite License (Unregistered)
+;// Limitations   : PIC12,PIC16 max code size:2048 words, max RAM banks:2, Non commercial use only
+;/////////////////////////////////////////////////////////////////////////////////
+
+	ORG 0x00000000
+0000  2842  	GOTO	_startup
+	ORG 0x00000004
+0004  00FF  	MOVWF Int1Context
+0005  0E03  	SWAPF STATUS, W
+0006  1283  	BCF STATUS, RP0
+0007  1303  	BCF STATUS, RP1
+0008  00A0  	MOVWF Int1BContext
+0009  0E0A  	SWAPF PCLATH, W
+000A  00A1  	MOVWF Int1BContext+D'1'
+000B  0E04  	SWAPF FSR, W
+000C  00A2  	MOVWF Int1BContext+D'2'
+000D  118A  	BCF PCLATH,3
+000E  120A  	BCF PCLATH,4
+000F  2845  	GOTO	interrupt
+	ORG 0x00000010
+0010        delay_ms_00000
+0010        ; { delay_ms ; function begin
+0010  08A5  	MOVF delay_ms_00000_arg_del, F
+0011  1D03  	BTFSS STATUS,Z
+0012  2814  	GOTO	label4026531857
+0013  0008  	RETURN
+0014        label4026531857
+0014  30F9  	MOVLW 0xF9
+0015        label4026531858
+0015  3EFF  	ADDLW 0xFF
+0016  1D03  	BTFSS STATUS,Z
+0017  2815  	GOTO	label4026531858
+0018  0000  	NOP
+0019  0BA5  	DECFSZ delay_ms_00000_arg_del, F
+001A  2814  	GOTO	label4026531857
+001B  0008  	RETURN
+001C        ; } delay_ms function end
+
+	ORG 0x0000001C
+001C        delay_s_00000
+001C        ; { delay_s ; function begin
+001C        label4026531863
+001C  30FA  	MOVLW 0xFA
+001D  00A5  	MOVWF delay_ms_00000_arg_del
+001E  2010  	CALL delay_ms_00000
+001F  30FA  	MOVLW 0xFA
+0020  00A5  	MOVWF delay_ms_00000_arg_del
+0021  2010  	CALL delay_ms_00000
+0022  30FA  	MOVLW 0xFA
+0023  00A5  	MOVWF delay_ms_00000_arg_del
+0024  2010  	CALL delay_ms_00000
+0025  30FA  	MOVLW 0xFA
+0026  00A5  	MOVWF delay_ms_00000_arg_del
+0027  2010  	CALL delay_ms_00000
+0028  0BA4  	DECFSZ delay_s_00000_arg_del, F
+0029  281C  	GOTO	label4026531863
+002A  0008  	RETURN
+002B        ; } delay_s function end
+
+	ORG 0x0000002B
+002B        main
+002B        ; { main ; function begin
+002B  1283  	BCF STATUS, RP0
+002C  1703  	BSF STATUS, RP1
+002D  019E  	CLRF gbl_ansel
+002E  019F  	CLRF gbl_anselh
+002F  30C0  	MOVLW 0xC0
+0030  1683  	BSF STATUS, RP0
+0031  1303  	BCF STATUS, RP1
+0032  0081  	MOVWF gbl_option_reg
+0033  30FF  	MOVLW 0xFF
+0034  1283  	BCF STATUS, RP0
+0035  00A3  	MOVWF gbl_FCV_LED_OUTPUT
+0036        label268439656
+0036  30FF  	MOVLW 0xFF
+0037  0623  	XORWF gbl_FCV_LED_OUTPUT, W
+0038  00A3  	MOVWF gbl_FCV_LED_OUTPUT
+0039  1683  	BSF STATUS, RP0
+003A  0187  	CLRF gbl_trisc
+003B  1283  	BCF STATUS, RP0
+003C  0823  	MOVF gbl_FCV_LED_OUTPUT, W
+003D  0087  	MOVWF gbl_portc
+003E  3001  	MOVLW 0x01
+003F  00A4  	MOVWF delay_s_00000_arg_del
+0040  201C  	CALL delay_s_00000
+0041  2836  	GOTO	label268439656
+0042        ; } main function end
+
+	ORG 0x00000042
+0042        _startup
+0042  118A  	BCF PCLATH,3
+0043  120A  	BCF PCLATH,4
+0044  282B  	GOTO	main
+	ORG 0x00000045
+0045        interrupt
+0045        ; { interrupt ; function begin
+0045  1283  	BCF STATUS, RP0
+0046  1303  	BCF STATUS, RP1
+0047  0E22  	SWAPF Int1BContext+D'2', W
+0048  0084  	MOVWF FSR
+0049  0E21  	SWAPF Int1BContext+D'1', W
+004A  008A  	MOVWF PCLATH
+004B  0E20  	SWAPF Int1BContext, W
+004C  0083  	MOVWF STATUS
+004D  0EFF  	SWAPF Int1Context, F
+004E  0E7F  	SWAPF Int1Context, W
+004F  0009  	RETFIE
+0050        ; } interrupt function end
+
+	ORG 0x00002007
+2007  30D5  	DW 0x30D5
