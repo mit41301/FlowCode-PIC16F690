@@ -1,0 +1,13 @@
+// SourceBoost Linker Function Resource Usage Dump
+
+#GLOBAL:"global",line = 0,ram = 6.0,rom = 0;
+FCM_Init_variables(void):"C:\PICDEM_Lab\flowcode\ADC_Labs\ADC_Lab2\solution\ADC_Lab2.c",line = 208,ram = 0.0,rom = 6;
+FCM_Read_ADC(void):"C:\PICDEM_Lab\flowcode\ADC_Labs\ADC_Lab2\solution\ADC_Lab2.c",line = 220,ram = 0.0,rom = 8;
+FCD_ADC0_SampleADC(void):"C:\PICDEM_Lab\flowcode\ADC_Labs\ADC_Lab2\solution\ADC_Lab2.c",line = 86,ram = 2.0,rom = 42;
+FCD_ADC0_ReadAsByte(void):"C:\PICDEM_Lab\flowcode\ADC_Labs\ADC_Lab2\solution\ADC_Lab2.c",line = 184,ram = 1.0,rom = 5;
+FCM_Loop_Delay(void):"C:\PICDEM_Lab\flowcode\ADC_Labs\ADC_Lab2\solution\ADC_Lab2.c",line = 242,ram = 0.0,rom = 9;
+main(void):"C:\PICDEM_Lab\flowcode\ADC_Labs\ADC_Lab2\solution\ADC_Lab2.c",line = 262,ram = 0.0,rom = 20;
+interrupt(void):"C:\PICDEM_Lab\flowcode\ADC_Labs\ADC_Lab2\solution\ADC_Lab2.c",line = 309,ram = 0.0,rom = 11;
+_startup(void):"NoSourceFile",line = 0,ram = 0.0,rom = 3;
+#HEAP_BLOCK: 0, 160, 95;
+#HEAP_BLOCK: 1, 39, 73;

@@ -1,0 +1,170 @@
+;/////////////////////////////////////////////////////////////////////////////////
+;// Code Generator: BoostC Compiler - http://www.sourceboost.com
+;// Version       : 6.70
+;// License Type  : Lite License (Unregistered)
+;// Limitations   : PIC12,PIC16 max code size:2048 words, max RAM banks:2, Non commercial use only
+;/////////////////////////////////////////////////////////////////////////////////
+
+	ORG 0x00000000
+0000  286A  	GOTO	_startup
+	ORG 0x00000004
+0004  00FF  	MOVWF Int1Context
+0005  0E03  	SWAPF STATUS, W
+0006  1283  	BCF STATUS, RP0
+0007  1303  	BCF STATUS, RP1
+0008  00A0  	MOVWF Int1BContext
+0009  0E0A  	SWAPF PCLATH, W
+000A  00A1  	MOVWF Int1BContext+D'1'
+000B  0E04  	SWAPF FSR, W
+000C  00A2  	MOVWF Int1BContext+D'2'
+000D  118A  	BCF PCLATH,3
+000E  120A  	BCF PCLATH,4
+000F  286D  	GOTO	interrupt
+	ORG 0x00000010
+0010        FCD_ADC0_S_0001F
+0010        ; { FCD_ADC0_SampleADC ; function begin
+0010  3020  	MOVLW 0x20
+0011  1683  	BSF STATUS, RP0
+0012  1303  	BCF STATUS, RP1
+0013  009F  	MOVWF gbl_adcon1
+0014  3004  	MOVLW 0x04
+0015  1283  	BCF STATUS, RP0
+0016  1703  	BSF STATUS, RP1
+0017  009F  	MOVWF gbl_anselh
+0018  1683  	BSF STATUS, RP0
+0019  1303  	BCF STATUS, RP1
+001A  0806  	MOVF gbl_trisb, W
+001B  1283  	BCF STATUS, RP0
+001C  00A5  	MOVWF FCD_ADC0_S_0001F_1_old_tris
+001D  3010  	MOVLW 0x10
+001E  1683  	BSF STATUS, RP0
+001F  0406  	IORWF gbl_trisb, W
+0020  0086  	MOVWF gbl_trisb
+0021  3029  	MOVLW 0x29
+0022  1283  	BCF STATUS, RP0
+0023  009F  	MOVWF gbl_adcon0
+0024  01A6  	CLRF FCD_ADC0_S_0001F_1_cnt
+0025        label268439682
+0025  3028  	MOVLW 0x28
+0026  0226  	SUBWF FCD_ADC0_S_0001F_1_cnt, W
+0027  1803  	BTFSC STATUS,C
+0028  282B  	GOTO	label268439683
+0029  0AA6  	INCF FCD_ADC0_S_0001F_1_cnt, F
+002A  2825  	GOTO	label268439682
+002B        label268439683
+002B  3002  	MOVLW 0x02
+002C  041F  	IORWF gbl_adcon0, W
+002D  009F  	MOVWF gbl_adcon0
+002E        label268439687
+002E  189F  	BTFSC gbl_adcon0,1
+002F  282E  	GOTO	label268439687
+0030  0825  	MOVF FCD_ADC0_S_0001F_1_old_tris, W
+0031  1683  	BSF STATUS, RP0
+0032  0086  	MOVWF gbl_trisb
+0033  1283  	BCF STATUS, RP0
+0034  1703  	BSF STATUS, RP1
+0035  019E  	CLRF gbl_ansel
+0036  019F  	CLRF gbl_anselh
+0037  1303  	BCF STATUS, RP1
+0038  019F  	CLRF gbl_adcon0
+0039  0008  	RETURN
+003A        ; } FCD_ADC0_SampleADC function end
+
+	ORG 0x0000003A
+003A        FCD_ADC0_R_00020
+003A        ; { FCD_ADC0_ReadAsByte ; function begin
+003A  1283  	BCF STATUS, RP0
+003B  1303  	BCF STATUS, RP1
+003C  081E  	MOVF gbl_adresh, W
+003D  00A5  	MOVWF CompTempVarRet623
+003E  0008  	RETURN
+003F        ; } FCD_ADC0_ReadAsByte function end
+
+	ORG 0x0000003F
+003F        FCM_Read_A_0001E
+003F        ; { FCM_Read_ADC ; function begin
+003F  2010  	CALL FCD_ADC0_S_0001F
+0040  203A  	CALL FCD_ADC0_R_00020
+0041  0825  	MOVF CompTempVarRet623, W
+0042  00A4  	MOVWF gbl_FCV_ADC_RESULT
+0043  0E24  	SWAPF gbl_FCV_ADC_RESULT, W
+0044  39F0  	ANDLW 0xF0
+0045  00A4  	MOVWF gbl_FCV_ADC_RESULT
+0046  0008  	RETURN
+0047        ; } FCM_Read_ADC function end
+
+	ORG 0x00000047
+0047        FCM_Loop_D_00021
+0047        ; { FCM_Loop_Delay ; function begin
+0047        label268439668
+0047  1283  	BCF STATUS, RP0
+0048  1303  	BCF STATUS, RP1
+0049  0824  	MOVF gbl_FCV_ADC_RESULT, W
+004A  3C00  	SUBLW 0x00
+004B  1803  	BTFSC STATUS,C
+004C  0008  	RETURN
+004D  0324  	DECF gbl_FCV_ADC_RESULT, W
+004E  00A4  	MOVWF gbl_FCV_ADC_RESULT
+004F  2847  	GOTO	label268439668
+0050        ; } FCM_Loop_Delay function end
+
+	ORG 0x00000050
+0050        FCM_Init_v_0001D
+0050        ; { FCM_Init_variables ; function begin
+0050  30FF  	MOVLW 0xFF
+0051  1283  	BCF STATUS, RP0
+0052  1303  	BCF STATUS, RP1
+0053  00A3  	MOVWF gbl_FCV_TOGGLE
+0054  01A4  	CLRF gbl_FCV_ADC_RESULT
+0055  0008  	RETURN
+0056        ; } FCM_Init_variables function end
+
+	ORG 0x00000056
+0056        main
+0056        ; { main ; function begin
+0056  1283  	BCF STATUS, RP0
+0057  1703  	BSF STATUS, RP1
+0058  019E  	CLRF gbl_ansel
+0059  019F  	CLRF gbl_anselh
+005A  30C0  	MOVLW 0xC0
+005B  1683  	BSF STATUS, RP0
+005C  1303  	BCF STATUS, RP1
+005D  0081  	MOVWF gbl_option_reg
+005E  2050  	CALL FCM_Init_v_0001D
+005F        label268439715
+005F  203F  	CALL FCM_Read_A_0001E
+0060  30FF  	MOVLW 0xFF
+0061  0623  	XORWF gbl_FCV_TOGGLE, W
+0062  00A3  	MOVWF gbl_FCV_TOGGLE
+0063  1683  	BSF STATUS, RP0
+0064  0187  	CLRF gbl_trisc
+0065  1283  	BCF STATUS, RP0
+0066  0823  	MOVF gbl_FCV_TOGGLE, W
+0067  0087  	MOVWF gbl_portc
+0068  2047  	CALL FCM_Loop_D_00021
+0069  285F  	GOTO	label268439715
+006A        ; } main function end
+
+	ORG 0x0000006A
+006A        _startup
+006A  118A  	BCF PCLATH,3
+006B  120A  	BCF PCLATH,4
+006C  2856  	GOTO	main
+	ORG 0x0000006D
+006D        interrupt
+006D        ; { interrupt ; function begin
+006D  1283  	BCF STATUS, RP0
+006E  1303  	BCF STATUS, RP1
+006F  0E22  	SWAPF Int1BContext+D'2', W
+0070  0084  	MOVWF FSR
+0071  0E21  	SWAPF Int1BContext+D'1', W
+0072  008A  	MOVWF PCLATH
+0073  0E20  	SWAPF Int1BContext, W
+0074  0083  	MOVWF STATUS
+0075  0EFF  	SWAPF Int1Context, F
+0076  0E7F  	SWAPF Int1Context, W
+0077  0009  	RETFIE
+0078        ; } interrupt function end
+
+	ORG 0x00002007
+2007  30D5  	DW 0x30D5
