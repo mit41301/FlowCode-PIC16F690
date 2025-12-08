@@ -1,11 +1,17 @@
 https://www.microchip.com/en-us/development-tool/TSW1012
 
-Easy programming of Microchip 8-bit PIC MCUs 
+Easy programming of Microchip 8-bit PIC MCUs
+
 Graphical programming tool
+
 Quick and easy to use
+
 Ideal for testing & debugging electronic systems
+
 Microcontroller flexibility
+
 Built-in test and debugging
+
 
 <img width="256" height="211" alt="image" src="https://github.com/user-attachments/assets/a0a38a4d-800e-400c-975f-49e07ac989cf" />
 
